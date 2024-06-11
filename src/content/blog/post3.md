@@ -1,57 +1,105 @@
 ---
-title: "Demo Post 3"
-description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
-pubDate: "Sep 12 2022"
-heroImage: "/post_img.webp"
-badge: "Demo badge"
-tags: ["rust","tokio"]
+title: "Visualising Football: Plotting Shots and Passes"
+description: "Leveraging the matplotlib and mplsoccer libraries, we can construct scatter plots which reveal the spatial distribution of shot attempts."
+pubDate: "Feb 14 2024"
+heroImage: "/blog_imgs/post3/hero_img.webp"
+blogLink: "https://github.com/wabailey"
 ---
 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
-incididunt ut labore et dolore magna aliqua. Vitae ultricies leo integer
-malesuada nunc vel risus commodo viverra. Adipiscing enim eu turpis egestas
-pretium. Euismod elementum nisi quis eleifend quam adipiscing. In hac habitasse
-platea dictumst vestibulum. Sagittis purus sit amet volutpat. Netus et malesuada
-fames ac turpis egestas. Eget magna fermentum iaculis eu non diam phasellus
-vestibulum lorem. Varius sit amet mattis vulputate enim. Habitasse platea
-dictumst quisque sagittis. Integer quis auctor elit sed vulputate mi. Dictumst
-quisque sagittis purus sit amet.
+As a driven individual with a passion for both football and data visualisation, I recently embarked on a project to develop my Python skills to unlock valuable insights from match data. My existing skills and knowledge of both Tableau and Web Development have really fast-tracked my learning of data visualisation, a skill I'm eager to leverage in my professional career.
 
-Morbi tristique senectus et netus. Id semper risus in hendrerit gravida rutrum
-quisque non tellus. Habitasse platea dictumst quisque sagittis purus sit amet.
-Tellus molestie nunc non blandit massa. Cursus vitae congue mauris rhoncus.
-Accumsan tortor posuere ac ut. Fringilla urna porttitor rhoncus dolor. Elit
-ullamcorper dignissim cras tincidunt lobortis. In cursus turpis massa tincidunt
-dui ut ornare lectus. Integer feugiat scelerisque varius morbi enim nunc.
-Bibendum neque egestas congue quisque egestas diam. Cras ornare arcu dui vivamus
-arcu felis bibendum. Dignissim suspendisse in est ante in nibh mauris. Sed
-tempus urna et pharetra pharetra massa massa ultricies mi.
+#### Plotting Shot Locations:
 
-Mollis nunc sed id semper risus in. Convallis a cras semper auctor neque. Diam
-sit amet nisl suscipit. Lacus viverra vitae congue eu consequat ac felis donec.
-Egestas integer eget aliquet nibh praesent tristique magna sit amet. Eget magna
-fermentum iaculis eu non diam. In vitae turpis massa sed elementum. Tristique et
-egestas quis ipsum suspendisse ultrices. Eget lorem dolor sed viverra ipsum. Vel
-turpis nunc eget lorem dolor sed viverra. Posuere ac ut consequat semper viverra
-nam. Laoreet suspendisse interdum consectetur libero id faucibus. Diam phasellus
-vestibulum lorem sed risus ultricies tristique. Rhoncus dolor purus non enim
-praesent elementum facilisis. Ultrices tincidunt arcu non sodales neque. Tempus
-egestas sed sed risus pretium quam vulputate. Viverra suspendisse potenti nullam
-ac tortor vitae purus faucibus ornare. Fringilla urna porttitor rhoncus dolor
-purus non. Amet dictum sit amet justo donec enim.
+The first step for all data visualisations is to gather your data. In Football, this data can come from a variety of sources, such as match reports, player tracking data, or even your own observations. With the mplsoccer Python library, we have access to statsbomb data which makes the data gathering workflow incredibly easy. And leveraging the matplotlib and mplsoccer libraries further, we can construct scatter plots which reveal the spatial distribution of shot attempts. Each data point represents a shot on the virtual pitch, offering immediate insight into offensive tendencies and potential defensive vulnerabilities.
 
-Mattis ullamcorper velit sed ullamcorper morbi tincidunt. Tortor posuere ac ut
-consequat semper viverra. Tellus mauris a diam maecenas sed enim ut sem viverra.
-Venenatis urna cursus eget nunc scelerisque viverra mauris in. Arcu ac tortor
-dignissim convallis aenean et tortor at. Curabitur gravida arcu ac tortor
-dignissim convallis aenean et tortor. Egestas tellus rutrum tellus pellentesque
-eu. Fusce ut placerat orci nulla pellentesque dignissim enim sit amet. Ut enim
-blandit volutpat maecenas volutpat blandit aliquam etiam. Id donec ultrices
-tincidunt arcu. Id cursus metus aliquam eleifend mi.
+Here is an example of how to plot shot positions:
 
-Tempus quam pellentesque nec nam aliquam sem. Risus at ultrices mi tempus
-imperdiet. Id porta nibh venenatis cras sed felis eget velit. Ipsum a arcu
-cursus vitae. Facilisis magna etiam tempor orci eu lobortis elementum. Tincidunt
-dui ut ornare lectus sit. Quisque non tellus orci ac. Blandit libero volutpat
-sed cras. Nec tincidunt praesent semper feugiat nibh sed pulvinar proin gravida.
-Egestas integer eget aliquet nibh praesent tristique magna.
+> `import matplotlib.pyplot as plt`  
+> `from mplsoccer import Pitch`
+>
+> `# Create pitch`  
+> `pitch = Pitch(line_color='black')`  
+> `fig, ax = pitch.grid(grid_height=0.9, title_height=0.06, axis=False, endnote_height=0.04, title_space=0, endnote_space=0)`
+>
+> `# Create some sample data`  
+> `shot_positions = [`  
+> `(15, 20),`  
+> `(15, 30),`  
+> `(15, 40),`  
+> `(15, 50),`  
+> `(15, 60),`  
+> `]`
+>
+> `# Create a scatter plot`  
+> `pitch.scatter(`  
+> `[x for (x, y) in shot_positions],`  
+> `[y for (x, y) in shot_positions],`  
+> `s=500,`  
+> `ax=ax['pitch']`  
+> `)`
+>
+> `# Title the plot`  
+> `fig.suptitle("Shot Positions", fontsize=30)`
+>
+> `# Show the plot`  
+> `plt.show()`
+
+Output:
+![The San Juan Mountains are beautiful!](/blog_imgs/post3/img1.webp "San Juan Mountains")
+<br/>
+
+#### Plotting Pass Maps:
+
+Pass maps are another useful tool for analysis. They show the flow of passes between players on the field. By recording pass start and end points, we create pass maps that depict the flow of the ball throughout the match. These intricate lines act as a visual replay, unveiling passing patterns, individual contributions, and potential areas for tactical adjustments.
+
+Here is an example of how to create a pass map:
+
+> `import matplotlib.pyplot as plt`  
+> `from mplsoccer import Pitch`  
+> `import pandas as pd`
+>
+> `# Create pitch`  
+> `pitch = Pitch(line_color='black')`  
+> `fig, ax = pitch.draw(figsize=(10, 7))`
+>
+> `# Create some sample data with start and end positions`  
+> `passes = {`  
+> `'x': [10, 30, 50, 80],`  
+> `'y': [20, 40, 60, 50],`  
+> `'end_x': [20, 10, 90, 10],`  
+> `'end_y': [30, 60, 10, 10],`  
+> `}`
+>
+> `df = pd.DataFrame(passes)`
+>
+> `# Iterate through the passes and plot the start and end points`  
+> `for i,thepass in df.iterrows():`  
+> `x=thepass['x']`  
+> `y=thepass['y']`
+>
+> `# Plot circle with start positions`  
+> `passCircle=plt.Circle((x,y),2,color="blue")`  
+> `passCircle.set_alpha(.2)`  
+> `ax.add_patch(passCircle)`
+>
+> `# Plot arrow with end positions`  
+> `dx=thepass['end_x']-x`  
+> `dy=thepass['end_y']-y`  
+> `passArrow=plt.Arrow(x, y, dx, dy, width=3, color="blue")`  
+> `ax.add_patch(passArrow)`
+>
+> `# Title the plot`  
+> `fig.suptitle("Pass Map", fontsize=30)`
+>
+> `# Show the plot`  
+> `plt.show()`
+
+Output:
+![The San Juan Mountains are beautiful!](/blog_imgs/post3/img2.webp "San Juan Mountains")
+<br/>
+
+#### Deeper Insights and Analysis:
+
+These visualisations are not static tools, we can filter our data which allows for targeted analysis, such as, specific game times (e.g., the first 10 minutes of a game, or the minutes preceding/following a goal/substitution/red card); specific players; or tactical formation changes.
+
+Ultimately, these data-driven insights translate into real-world impact. Identifying frequent shot zones reveals attacking efficiency, while highlighting key passers aids in tactical adjustments or individual player assessment. By transforming data into visual narratives, we gain a comprehensive understanding of team strengths and weaknesses, fostering informed discussions within the wider team.

@@ -1,3 +1,28 @@
-.time-line-container>div:last-child .education__time>.education__line {
-    display: none;
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.time-line-container > div:last-child .education__time > .education__line {
+  display: none;
 }
+
+/* @starting-style {
+  #projectCard {
+    opacity: 0;
+    scale: 0;
+  }
+}
+
+#projectCard {
+  position: relative;
+  transition: opacity 0.1s, transform 0.1s, scale 0.1s,
+    display 0.5s allow-discrete;
+  opacity: 1;
+  scale: 1;
+}
+
+#projectCard.closed {
+  opacity: 0;
+  scale: 0;
+  transform: skewX(50deg) translateX(-25vw);
+} */

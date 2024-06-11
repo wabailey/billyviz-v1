@@ -1,0 +1,75 @@
+---
+import { type ProjectSchema } from "../content/config";
+import { Image } from "astro:assets";
+import BaseLayout from "./BaseLayout.astro";
+import dayjs from "dayjs";
+import localizedFormat from "dayjs/plugin/localizedFormat";
+
+export interface Props extends ProjectSchema {}
+
+const { title, description, pubDate, heroImage, category, badge, tags = [], githubLink, projectLink } = Astro.props;
+dayjs.extend(localizedFormat);
+const displayDate = dayjs(pubDate).format("MMM YYYY")
+---
+
+<BaseLayout title={title} description={description}, ogType="article">
+  <main class="md:flex md:justify-center">
+    <article class="prose prose-quoteless prose-lg max-w-3xl prose-img:mx-auto">
+
+      {heroImage && <Image width={750} height={422} format="webp" src={heroImage} alt={title} class="w-full mb-6 aspect-video object-cover" />}
+
+      <div class="flex justify-between items-start">
+        <h1 class="title text-4xl font-bold m-0">{title}</h1>
+        <div class="flex gap-2">
+
+          {githubLink && <a href={githubLink} target="_blank">
+            <button class="btn btn-outline btn-accent">
+              View Code
+              <svg viewBox="0 0 24 24" aria-hidden="true" class="h-5 w-5" fill='currentColor'>
+                <path fill-rule="evenodd" clip-rule="evenodd" d="M12 2C6.477 2 2 6.463 2 11.97c0 4.404 2.865 8.14 6.839 9.458.5.092.682-.216.682-.48 0-.236-.008-.864-.013-1.695-2.782.602-3.369-1.337-3.369-1.337-.454-1.151-1.11-1.458-1.11-1.458-.908-.618.069-.606.069-.606 1.003.07 1.531 1.027 1.531 1.027.892 1.524 2.341 1.084 2.91.828.092-.643.35-1.083.636-1.332-2.22-.251-4.555-1.107-4.555-4.927 0-1.088.39-1.979 1.029-2.675-.103-.252-.446-1.266.098-2.638 0 0 .84-.268 2.75 1.022A9.607 9.607 0 0 1 12 6.82c.85.004 1.705.114 2.504.336 1.909-1.29 2.747-1.022 2.747-1.022.546 1.372.202 2.386.1 2.638.64.696 1.028 1.587 1.028 2.675 0 3.83-2.339 4.673-4.566 4.92.359.307.678.915.678 1.846 0 1.332-.012 2.407-.012 2.734 0 .267.18.577.688.48 3.97-1.32 6.833-5.054 6.833-9.458C22 6.463 17.522 2 12 2Z"></path>
+              </svg>
+            </button>
+          </a>}
+
+          {projectLink && <a href={projectLink} target="_blank">
+            <button class="btn btn-outline btn-accent">
+              Live Site
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" d="m4.5 19.5 15-15m0 0H8.25m11.25 0v11.25" />
+              </svg>
+            </button>
+          </a>}
+        </div>
+      </div>
+
+      {pubDate && <time class="opacity-75">{displayDate}</time>}
+
+      <div class="flex flex-col my-2">
+        <div class="badge badge-secondary my-1">
+          {category == 'viz' && 'Visualisation'}
+          {category == 'dev' && 'Web Development'}
+        </div>
+        {badge && <div class="badge badge-primary my-1">{badge}</div>}
+      </div>
+
+      <p class="my-4 text-xl">{description}</p>
+      
+      <div>
+        <div class="flex items-center gap-2">
+          {
+            tags &&
+              tags.map((tag) => (
+                <a href={`/projects/tag/${tag}`} class="badge badge-outline no-underline">
+                  {tag}
+                </a>
+              ))
+          }
+        </div>
+      </div>
+
+      <div class="divider my-2"></div>
+
+      <slot />
+    </article>
+  </main>
+</BaseLayout>

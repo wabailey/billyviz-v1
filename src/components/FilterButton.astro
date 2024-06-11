@@ -1,0 +1,7 @@
+---
+const { classList, category, name } = Astro.props
+---
+
+<button class=`hover:opacity-100 hover:underline underline-offset-8 transition-all ease-in ${classList}` data-type={category} id=`${name}P`>
+  {name}
+</button>
