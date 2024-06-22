@@ -55,9 +55,11 @@ const uniqueCats = [...new Set(cats)]
 </BaseLayout>
 
 <script is:inline>
-  let allBtn = document.getElementById('AllP')
-  let webBtn = document.getElementById('WebP')
-  let vizBtn = document.getElementById('VisualisationP')
+  document.addEventListener('astro:page-load', () => { 
+// Your code
+  const allBtn = document.getElementById('AllP')
+  const webBtn = document.getElementById('WebP')
+  const vizBtn = document.getElementById('VisualisationP')
 
   allBtn.addEventListener('click', (e) => (
     showAll(e),
@@ -91,6 +93,7 @@ const uniqueCats = [...new Set(cats)]
     let selectedCat = e.currentTarget.getAttribute('data-type')
     let catEl = document.getElementById('category')
     let cats = catEl.dataset.cats
+
     cats = cats.split(',')
     cats.splice(cats.indexOf(selectedCat), 1)
 
@@ -109,7 +112,7 @@ const uniqueCats = [...new Set(cats)]
     }
   }
 
-  function showAll() {
+  function showAll(e) {
     let catEl = document.getElementById('category')
     let cats = catEl.dataset.cats
     cats = cats.split(',')
@@ -122,4 +125,7 @@ const uniqueCats = [...new Set(cats)]
       }
     })
   }
+
+  })
+  
 </script>

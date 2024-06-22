@@ -15,60 +15,186 @@ const last2_projects = sortedProjects.slice(0, 2)
 const last3_posts = sortedPosts.slice(0, 3)
 ---
 
-<BaseLayout title="Home" sideBarActiveItemID="home">
-  <div class="pb-12 mt-5">
-    <div class="text-xl py-4">Hi 👋</div>
-    <div class="text-5xl font-bold">I'm William Bailey</div>
-    <div class="pt-6">
-      <text class="text-lg">
-        I am a Front-end and data visualisation developer. I create websites and visualisations with a focus on effective interfaces and infographics.
-      </text>
-    </div>
+<BaseLayout title="Home" sideBarActiveItemID="home" isIndex>
+  <div class="welcome">
+    <span id="logo1" class="logo-anim1">Billy</span>
+    <span id="logo2" class="logo-anim2">Viz</span>
   </div>
+  <div id="main-content" class="main-content main-content-anim">
+    <div class="pb-12 mt-5">
+      <div class="text-xl py-4">Hi 👋</div>
+      <div class="text-5xl font-bold">I'm Will Bailey</div>
+      <div class="pt-6">
+        <text class="text-lg">
+          I am a Front-end and data visualisation developer. I create websites and visualisations with a focus on effective interfaces and infographics.
+        </text>
+      </div>
+    </div>
 
-  <div class="mt-16 mb-8">
-    <div>
-      <div class="text-3xl w-full font-bold mb-2">My recent work</div>
+    <div class="mt-16 mb-8">
+      <div>
+        <div class="text-3xl w-full font-bold mb-2">My recent work</div>
+      </div>
     </div>
-  </div>
-  
-  <div class="grid grid-cols-2 gap-8">
+    
+    <div class="grid grid-cols-2 gap-8">
+      {
+        last2_projects.map((project) => (
+          <>
+            <ProjectCard
+              img={project.data.heroImage}
+              title={project.data.title}
+              desc={project.data.description}
+              url={"/projects/" + createSlug(project.data.title, project.slug)}
+              target="_self"
+              badge={project.data.badge}
+              tags={project.data.tags}
+            />
+          </>
+        ))
+      }
+    </div>
+
+    <div class="mt-16 mb-8">
+      <div>
+        <div class="text-3xl w-full font-bold mb-2">My recent posts</div>
+      </div>
+    </div>
+    
     {
-      last2_projects.map((project) => (
+      last3_posts.map((post) => (
         <>
-          <ProjectCard
-            img={project.data.heroImage}
-            title={project.data.title}
-            desc={project.data.description}
-            url={"/projects/" + createSlug(project.data.title, project.slug)}
+          <HorizontalCard
+            title={post.data.title}
+            date={post.data.pubDate}
+            img={post.data.heroImage}
+            desc={post.data.description}
+            url={"/blog/" + createSlug(post.data.title, post.slug)}
             target="_self"
-            badge={project.data.badge}
-            tags={project.data.tags}
           />
+          <div class="divider my-3 last:hidden" />
         </>
       ))
     }
   </div>
-
-  <div class="mt-16 mb-8">
-    <div>
-      <div class="text-3xl w-full font-bold mb-2">My recent posts</div>
-    </div>
-  </div>
-  
-  {
-    last3_posts.map((post) => (
-      <>
-        <HorizontalCard
-          title={post.data.title}
-          date={post.data.pubDate}
-          img={post.data.heroImage}
-          desc={post.data.description}
-          url={"/blog/" + createSlug(post.data.title, post.slug)}
-          target="_self"
-        />
-        <div class="divider my-0 last:hidden" />
-      </>
-    ))
-  }
 </BaseLayout>
+
+<style>
+  .welcome {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    z-index: 50;
+    overflow: hidden;
+    pointer-events: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 8rem;
+  }
+
+  #logo1 {
+    opacity: 0;
+  }
+
+  #logo2 {
+    opacity: 0;
+  }
+
+  .logo-anim1 {
+    animation: fadeUpInOut 2s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+    animation-delay: 1.4s;
+    transform: translateY(100px);
+  }
+
+  .logo-anim2 {
+    animation: fadeUpInOut 2s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+    animation-delay: 1.6s;
+    transform: translateY(100px);
+  }
+
+  .main-content {
+    position: relative;
+    overflow: hidden;
+  }
+
+  .main-content-anim {
+    animation: moveUp 0.6s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+    animation-delay: 3.8s;
+    top: 100vh;
+  }
+
+  @keyframes fadeUpInOut {
+    0% {
+      opacity: 0;
+      transform: translateY(100px);
+    }
+    20% {
+      opacity: 1;
+      transform: translateY(0px);
+    }
+    85% {
+      opacity: 1;
+      transform: translateY(0px);
+    }
+    100% {
+      opacity: 0;
+      transform: translateY(-50px);
+    }
+  }
+
+  @keyframes moveUp {
+    0% {
+      opacity: 0;
+      top: 100vh;
+      transform: scaleY(1.5);
+      filter: blur(40px);
+    }
+    80% {
+      opacity: 0.6;
+      top: -5vh;
+    }
+    100% {
+      opacity: 1;
+      top: 0;
+      transform: scaleY(1);
+      filter: blur(0);
+    }
+  }
+</style>
+
+<script is:inline>
+  window.addEventListener('load', () => {
+    if (document.querySelector('#main-content') !== null) {
+      window.sessionStorage.setItem('Main Content', 'displayed');
+    }
+    if (document.querySelector('#sidebar') !== null) {
+      window.sessionStorage.setItem('Sidebar', 'displayed');
+    }
+    if (document.querySelector('#logo1') !== null) {
+      window.sessionStorage.setItem('Logo 1', 'displayed');
+    }
+    if (document.querySelector('#logo2') !== null) {
+      window.sessionStorage.setItem('Logo 2', 'displayed');
+    }
+  })
+
+  if (window.sessionStorage.getItem('Main Content')) {
+    document.querySelector('#main-content').classList.remove('main-content-anim')
+  }
+  if (window.sessionStorage.getItem('Sidebar')) {
+    document.querySelector('#sidebar').classList.remove('index')
+  }
+  if (window.sessionStorage.getItem('Logo 1')) {
+    document.querySelector('#logo1').classList.remove('logo-anim1')
+  }
+  if (window.sessionStorage.getItem('Logo 2')) {
+    document.querySelector('#logo2').classList.remove('logo-anim2')
+  }
+
+  setTimeout(() => {
+    window.sessionStorage.clear();
+  }, 300000)
+</script>

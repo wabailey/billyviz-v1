@@ -9,10 +9,10 @@ const displayDate = dayjs(date).format("ll")
 ---
 
 <div
-  class="rounded-lg bg-base-100 hover:shadow-xl transition ease-in-out hover:scale-[102%]"
+  class="bg-base-300/10 backdrop-blur-2xl hover:shadow-xl transition ease-in-out hover:scale-[102%]"
 >
   <a href={url} target={target}>
-    <div class="flex gap-4 items-start justify-center max-w-7xl p-4 flex-col md:flex-row">
+    <div class="flex items-start justify-center max-w-7xl flex-col md:flex-row">
       {
         <Image
           src={img ? img : '/hero_img.webp'}
@@ -20,10 +20,10 @@ const displayDate = dayjs(date).format("ll")
           height={422}
           format="webp"
           alt={title}
-          class="max-w-[200px] aspect-video object-cover rounded-lg"
+          class="max-w-[220px] aspect-video object-cover"
         />
       }
-      <div class="grow w-full">
+      <div class="grow w-full p-4">
         <div class="flex items-end justify-between gap-2">
           <h2 class="card-title">
             {title}
