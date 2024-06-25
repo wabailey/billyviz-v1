@@ -5,41 +5,57 @@ import ProjectCard from "@components/ProjectCard.astro";
 import { getCollection } from "astro:content";
 import createSlug from "../lib/createSlug";
 
-const projects = await getCollection('projects');
-const posts = await getCollection('blog');
+const projects = await getCollection("projects");
+const posts = await getCollection("blog");
 
-const sortedProjects = projects.sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
-const sortedPosts = posts.sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
+const sortedProjects = projects.sort(
+  (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf(),
+);
+const sortedPosts = posts.sort(
+  (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf(),
+);
 
-const last2_projects = sortedProjects.slice(0, 2)
-const last3_posts = sortedPosts.slice(0, 3)
+const last4_projects = sortedProjects.slice(0, 4);
+const last3_posts = sortedPosts.slice(0, 3);
 ---
 
 <BaseLayout title="Home" sideBarActiveItemID="home" isIndex>
-  <div class="welcome">
-    <span id="logo1" class="logo-anim1">Billy</span>
-    <span id="logo2" class="logo-anim2">Viz</span>
+  <div
+    id="welcome"
+    class="relative w-full [height:calc(100vh-4rem)] lg:h-screen px-3 flex flex-col justify-center antialiased welcome-anim"
+  >
+    <h4
+      id="text1"
+      class="text-left text-lg sm:text-2xl md:text-3xl lg:text-4xl font-hero text-stroke text-anim"
+    >
+      👋 I'm
+    </h4>
+    <div
+      class="w-full flex items-center justify-center font-hero leading-none text-[26vw] lg:text-[18vw] text-accent/80 text-center text-stroke"
+    >
+      <span id="logo1" class="logo-anim1"> Billy </span>
+      <span id="logo2" class="logo-anim2"> Viz </span>
+    </div>
+    <p
+      id="text2"
+      class="text-right text-lg sm:text-2xl md:text-3xl lg:text-4xl font-hero text-stroke pt-4 sm:pt-8 md:pt-10 lg:pt-16 text-anim"
+    >
+      I create websites and visualisations.
+    </p>
   </div>
-  <div id="main-content" class="main-content main-content-anim">
-    <div class="pb-12 mt-5">
-      <div class="text-xl py-4">Hi 👋</div>
-      <div class="text-5xl font-bold">I'm Will Bailey</div>
-      <div class="pt-6">
-        <text class="text-lg">
-          I am a Front-end and data visualisation developer. I create websites and visualisations with a focus on effective interfaces and infographics.
-        </text>
+  <div class="relative px-4 lg:p-6 mx-auto lg:max-w-[1000px] max-w-[100vw]">
+    <div class="my-12">
+      <div
+        class="text-4xl sm:text-5xl w-full font-hero text-stroke italic mb-2"
+      >
+        My recent <span class="text-gradient">projects</span>
       </div>
+      <div class="divider-gradient"></div>
     </div>
 
-    <div class="mt-16 mb-8">
-      <div>
-        <div class="text-3xl w-full font-bold mb-2">My recent work</div>
-      </div>
-    </div>
-    
-    <div class="grid grid-cols-2 gap-8">
+    <div class="grid sm:grid-cols-2 gap-8">
       {
-        last2_projects.map((project) => (
+        last4_projects.map((project) => (
           <>
             <ProjectCard
               img={project.data.heroImage}
@@ -55,12 +71,15 @@ const last3_posts = sortedPosts.slice(0, 3)
       }
     </div>
 
-    <div class="mt-16 mb-8">
-      <div>
-        <div class="text-3xl w-full font-bold mb-2">My recent posts</div>
+    <div class="mt-36 mb-12">
+      <div
+        class="text-4xl sm:text-5xl w-full font-hero text-stroke italic mb-2"
+      >
+        My recent <span class="text-gradient">posts</span>
       </div>
+      <div class="divider-gradient"></div>
     </div>
-    
+
     {
       last3_posts.map((post) => (
         <>
@@ -80,121 +99,143 @@ const last3_posts = sortedPosts.slice(0, 3)
 </BaseLayout>
 
 <style>
-  .welcome {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100vh;
-    z-index: 50;
-    overflow: hidden;
-    pointer-events: none;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-size: 8rem;
-  }
-
-  #logo1 {
-    opacity: 0;
-  }
-
-  #logo2 {
-    opacity: 0;
-  }
-
-  .logo-anim1 {
-    animation: fadeUpInOut 2s cubic-bezier(0.22, 1, 0.36, 1) forwards;
-    animation-delay: 1.4s;
-    transform: translateY(100px);
-  }
-
-  .logo-anim2 {
-    animation: fadeUpInOut 2s cubic-bezier(0.22, 1, 0.36, 1) forwards;
-    animation-delay: 1.6s;
-    transform: translateY(100px);
-  }
-
-  .main-content {
-    position: relative;
-    overflow: hidden;
-  }
-
-  .main-content-anim {
-    animation: moveUp 0.6s cubic-bezier(0.22, 1, 0.36, 1) forwards;
-    animation-delay: 3.8s;
-    top: 100vh;
-  }
-
-  @keyframes fadeUpInOut {
+  @keyframes fadeUpIn {
     0% {
       opacity: 0;
       transform: translateY(100px);
     }
-    20% {
-      opacity: 1;
-      transform: translateY(0px);
-    }
-    85% {
-      opacity: 1;
-      transform: translateY(0px);
-    }
     100% {
-      opacity: 0;
-      transform: translateY(-50px);
+      opacity: 1;
+      transform: translateY(0px);
     }
   }
 
-  @keyframes moveUp {
+  @keyframes slideRight {
     0% {
-      opacity: 0;
-      top: 100vh;
-      transform: scaleY(1.5);
-      filter: blur(40px);
-    }
-    80% {
-      opacity: 0.6;
-      top: -5vh;
+      transform: translateX(-152px);
     }
     100% {
-      opacity: 1;
-      top: 0;
-      transform: scaleY(1);
-      filter: blur(0);
+      transform: translateX(0px);
     }
+  }
+
+  @keyframes textFade {
+    0% {
+      opacity: 0;
+    }
+    100% {
+      opacity: 100%;
+    }
+  }
+
+  @keyframes textColor {
+    0% {
+      background-position: left;
+    }
+    100% {
+      background-position: right;
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .welcome-anim {
+      transform: translateX(-152px);
+      animation: slideRight 1s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+      animation-delay: 3.3s;
+    }
+  }
+
+  .logo-anim1 {
+    animation: fadeUpIn 2.75s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+    animation-delay: 1.3s;
+    transform: translateY(100px);
+    opacity: 0;
+  }
+
+  .logo-anim2 {
+    animation: fadeUpIn 2.75s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+    animation-delay: 1.5s;
+    transform: translateY(100px);
+    opacity: 0;
+  }
+
+  .text-anim {
+    animation: textFade 1s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+    animation-delay: 4.25s;
+    opacity: 0;
+  }
+
+  .text-gradient {
+    background-image: linear-gradient(
+      45deg,
+      oklch(var(--p)),
+      oklch(var(--s)),
+      oklch(var(--a))
+    );
+    background-clip: text;
+    color: transparent;
+    background-size: 400%;
+    animation: textColor 20s infinite alternate;
+  }
+
+  .divider-gradient {
+    text-align: center;
+    margin: 1.5rem auto;
+    height: 1px;
+    width: 100%;
+    background-image: linear-gradient(
+      45deg,
+      oklch(var(--p)),
+      oklch(var(--s)),
+      oklch(var(--a))
+    );
+    background-size: 400%;
+    animation: textColor 20s infinite alternate;
   }
 </style>
 
 <script is:inline>
-  window.addEventListener('load', () => {
-    if (document.querySelector('#main-content') !== null) {
-      window.sessionStorage.setItem('Main Content', 'displayed');
+  window.addEventListener("load", () => {
+    if (document.querySelector("#sidebar") !== null) {
+      window.sessionStorage.setItem("Sidebar", "displayed");
     }
-    if (document.querySelector('#sidebar') !== null) {
-      window.sessionStorage.setItem('Sidebar', 'displayed');
+    if (document.querySelector("#welcome") !== null) {
+      window.sessionStorage.setItem("Welcome", "displayed");
     }
-    if (document.querySelector('#logo1') !== null) {
-      window.sessionStorage.setItem('Logo 1', 'displayed');
+    if (document.querySelector("#logo1") !== null) {
+      window.sessionStorage.setItem("Logo 1", "displayed");
     }
-    if (document.querySelector('#logo2') !== null) {
-      window.sessionStorage.setItem('Logo 2', 'displayed');
+    if (document.querySelector("#logo2") !== null) {
+      window.sessionStorage.setItem("Logo 2", "displayed");
     }
-  })
+    if (document.querySelector("#text1") !== null) {
+      window.sessionStorage.setItem("Text 1", "displayed");
+    }
+    if (document.querySelector("#text2") !== null) {
+      window.sessionStorage.setItem("Text 2", "displayed");
+    }
+  });
 
-  if (window.sessionStorage.getItem('Main Content')) {
-    document.querySelector('#main-content').classList.remove('main-content-anim')
+  if (window.sessionStorage.getItem("Sidebar")) {
+    document.querySelector("#sidebar").classList.remove("index");
   }
-  if (window.sessionStorage.getItem('Sidebar')) {
-    document.querySelector('#sidebar').classList.remove('index')
+  if (window.sessionStorage.getItem("Welcome")) {
+    document.querySelector("#welcome").classList.remove("welcome-anim");
   }
-  if (window.sessionStorage.getItem('Logo 1')) {
-    document.querySelector('#logo1').classList.remove('logo-anim1')
+  if (window.sessionStorage.getItem("Logo 1")) {
+    document.querySelector("#logo1").classList.remove("logo-anim1");
   }
-  if (window.sessionStorage.getItem('Logo 2')) {
-    document.querySelector('#logo2').classList.remove('logo-anim2')
+  if (window.sessionStorage.getItem("Logo 2")) {
+    document.querySelector("#logo2").classList.remove("logo-anim2");
+  }
+  if (window.sessionStorage.getItem("Text 1")) {
+    document.querySelector("#text1").classList.remove("text-anim");
+  }
+  if (window.sessionStorage.getItem("Text 2")) {
+    document.querySelector("#text2").classList.remove("text-anim");
   }
 
   setTimeout(() => {
     window.sessionStorage.clear();
-  }, 300000)
+  }, 300000);
 </script>

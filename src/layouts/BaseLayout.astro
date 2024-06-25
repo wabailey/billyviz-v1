@@ -21,31 +21,46 @@ const {
 <!doctype html>
 <html lang="en">
   <head>
-    <BaseHead title={title} description={description} image={image} , ogType={ogType} />
+    <BaseHead
+      title={title}
+      description={description}
+      image={image}
+      ,
+      ogType={ogType}
+    />
     {TRANSITION_API && <ViewTransitions />}
   </head>
-  <body class="relative">
+  <body class="relative min-h-screen">
     <div class="drawer lg:drawer-open relative z-10">
       <input id="my-drawer" type="checkbox" class="drawer-toggle" />
       <div class="drawer-content">
         <Header title={SITE_TITLE} />
         <div class="md:flex md:justify-center">
-          <main class="p-6 pt-10 lg:max-w-[1000px] max-w-[100vw]">
+          <main class="max-w-[100vw]">
             <slot />
           </main>
         </div>
         <Footer />
       </div>
-      {includeSidebar && <SideBar sideBarActiveItemID={sideBarActiveItemID} {isIndex} />}
+      {
+        includeSidebar && (
+          <SideBar sideBarActiveItemID={sideBarActiveItemID} {isIndex} />
+        )
+      }
     </div>
 
     <div class="gradient-bg">
       <svg xmlns="http://www.w3.org/2000/svg">
         <defs>
           <filter id="goo">
-            <feGaussianBlur in="SourceGraphic" stdDeviation="10" result="blur" />
-            <feColorMatrix in="blur" mode="matrix" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 18 -8" result="goo" />
-            <feBlend in="SourceGraphic" in2="goo" />
+            <feGaussianBlur in="SourceGraphic" stdDeviation="10" result="blur"
+            ></feGaussianBlur>
+            <feColorMatrix
+              in="blur"
+              mode="matrix"
+              values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 18 -8"
+              result="goo"></feColorMatrix>
+            <feBlend in="SourceGraphic" in2="goo"></feBlend>
           </filter>
         </defs>
       </svg>
@@ -58,171 +73,226 @@ const {
         <div class="interactive"></div>
       </div>
     </div>
+    <script is:inline>
+      let vH = document.body.clientHeight;
+      animationHeightDuration1 = Math.floor((vH * 2.5) / 100) + "s";
+      animationHeightDuration2 = Math.floor((vH * 2.5) / 100 + 10) + "s";
+
+      const g1 = document.querySelector(".g1");
+      g1.style.animationDuration = animationHeightDuration1;
+
+      const g4 = document.querySelector(".g4");
+      g4.style.animationDuration = animationHeightDuration2;
+
+      document.addEventListener("astro:page-load", () => {
+        let curX = 0;
+        let curY = 0;
+        let tgX = 0;
+        let tgY = 0;
+
+        const intBubble = document.querySelector(".interactive");
+
+        function move() {
+          curX += (tgX - curX) / 20;
+          curY += (tgY - curY) / 20;
+          intBubble.style.transform = `translate(${Math.round(curX)}px, ${Math.round(curY)}px)`;
+          requestAnimationFrame(() => {
+            move();
+          });
+        }
+
+        window.addEventListener("mousemove", (event) => {
+          tgX = event.pageX;
+          tgY = event.pageY;
+        });
+
+        move();
+      });
+    </script>
+
+    <style>
+      @keyframes moveInCircle {
+        0% {
+          transform: rotate(0deg);
+        }
+        50% {
+          transform: rotate(180deg);
+        }
+        100% {
+          transform: rotate(360deg);
+        }
+      }
+
+      @keyframes moveVertical {
+        0% {
+          top: calc(-5% - 80vmax / 2);
+          transform: translateX(-10%);
+        }
+        25% {
+          transform: translateX(10%);
+        }
+        50% {
+          top: calc(115% - 80vmax / 2);
+          transform: translateX(-10%);
+        }
+        75% {
+          transform: translateX(10%);
+        }
+        100% {
+          top: calc(-5% - 80vmax / 2);
+          transform: translateX(-10%);
+        }
+      }
+
+      @keyframes moveHorizontal {
+        0% {
+          transform: translateX(-50%);
+          top: calc(15% - 80vmax / 2);
+        }
+        25% {
+          top: calc(85% - 80vmax / 2);
+        }
+        50% {
+          transform: translateX(50%);
+          top: calc(15% - 80vmax / 2);
+        }
+        75% {
+          top: calc(85% - 80vmax / 2);
+        }
+        100% {
+          transform: translateX(-50%);
+          top: calc(15% - 80vmax / 2);
+        }
+      }
+
+      .gradient-bg {
+        width: 100%;
+        height: 100%;
+        position: absolute;
+        overflow: hidden;
+        top: 0;
+        left: 0;
+        background: linear-gradient(40deg, rgb(5, 37, 55), oklch(var(--b3)));
+        z-index: 1;
+        pointer-events: none;
+      }
+
+      .gradient-bg svg {
+        display: none;
+      }
+
+      .gradients-container {
+        filter: url(#goo) blur(10px);
+        width: 100%;
+        height: 100%;
+      }
+
+      .g1 {
+        position: absolute;
+        background: radial-gradient(
+            circle at center,
+            oklch(var(--a) / 0.35) 0,
+            oklch(var(--a) / 0) 40%
+          )
+          no-repeat;
+        width: 80vmax;
+        height: 80vmax;
+        top: calc(50% - 80vmax / 2);
+        left: calc(50% - 80vmax / 2);
+        opacity: 1;
+
+        transform-origin: center center;
+        animation: moveVertical 45s ease infinite;
+      }
+
+      .g2 {
+        position: absolute;
+        background: radial-gradient(
+            circle at center,
+            oklch(var(--s) / 0.35) 0,
+            oklch(var(--s) / 0) 50%
+          )
+          no-repeat;
+        width: 80vmax;
+        height: 80vmax;
+        top: calc(50% - 80vmax / 2);
+        left: calc(50% - 80vmax / 2);
+        opacity: 1;
+
+        transform-origin: calc(50% - 400px);
+        animation: moveInCircle 20s reverse infinite;
+      }
+
+      .g3 {
+        position: absolute;
+        background: radial-gradient(
+            circle at center,
+            oklch(var(--p) / 0.35) 0,
+            oklch(var(--p) / 0) 50%
+          )
+          no-repeat;
+        width: 80vmax;
+        height: 80vmax;
+        top: calc(50% - 80vmax / 2 + 200px);
+        left: calc(50% - 80vmax / 2 - 500px);
+        opacity: 1;
+
+        transform-origin: calc(50% + 400px);
+        animation: moveInCircle 60s linear infinite;
+      }
+
+      .g4 {
+        position: absolute;
+        background: radial-gradient(
+            circle at center,
+            rgba(187, 113, 23, 0.35) 0,
+            rgba(187, 113, 23, 0) 40%
+          )
+          no-repeat;
+        width: 80vmax;
+        height: 80vmax;
+        top: calc(50% - 80vmax / 2);
+        left: calc(50% - 80vmax / 2);
+        opacity: 0.7;
+
+        transform-origin: calc(50% - 200px);
+        animation: moveHorizontal 40s ease infinite;
+      }
+
+      .g5 {
+        position: absolute;
+        background: radial-gradient(
+            circle at center,
+            rgba(27, 40, 99, 0.4) 0,
+            rgba(27, 40, 99, 0) 50%
+          )
+          no-repeat;
+        width: calc(80vmax * 2);
+        height: calc(80vmax * 2);
+        top: calc(50% - 80vmax / 2);
+        left: calc(50% - 80vmax / 2);
+        opacity: 1;
+
+        transform-origin: calc(50% - 800px) calc(50% + 200px);
+        animation: moveInCircle 20s ease infinite;
+      }
+
+      .interactive {
+        position: absolute;
+        background: radial-gradient(
+            circle at center,
+            rgba(72, 21, 107, 0.6) 0,
+            rgba(72, 21, 107, 0) 35%
+          )
+          no-repeat;
+        mix-blend-mode: var(--blending);
+
+        width: 50vw;
+        height: 50vw;
+        top: -25vw;
+        left: -25vw;
+        opacity: 0.7;
+      }
+    </style>
   </body>
 </html>
-
-<script is:inline>
-  document.addEventListener('astro:page-load', () => { 
-
-  let curX = 0;
-  let curY = 0;
-  let tgX = 0;
-  let tgY = 0;
-
-  const intBubble = document.querySelector('.interactive');
-
-  function move() {
-    curX += (tgX - curX) / 20;
-    curY += (tgY - curY) / 20;
-    intBubble.style.transform = `translate(${Math.round(curX)}px, ${Math.round(curY)}px)`;
-    requestAnimationFrame(() => {
-      move();
-    })
-  }
-
-  window.addEventListener('mousemove', (event) => {
-    tgX = event.pageX;
-    tgY = event.pageY;
-
-  });
-
-  move();
-});
-</script>
-
-<style>
-  @keyframes moveInCircle {
-    0% {
-      transform: rotate(0deg);
-    }
-    50% {
-      transform: rotate(180deg);
-    }
-    100% {
-      transform: rotate(360deg);
-    }
-  }
-
-  @keyframes moveVertical {
-    0% {
-      transform: translateY(-50%);
-    }
-    50% {
-      transform: translateY(50%);
-    }
-    100% {
-      transform: translateY(-50%);
-    }
-  }
-
-  @keyframes moveHorizontal {
-    0% {
-      transform: translateX(-50%) translateY(-10%);
-    }
-    50% {
-      transform: translateX(50%) translateY(10%);
-    }
-    100% {
-      transform: translateX(-50%) translateY(-10%);
-    }
-  }
-
-  .gradient-bg {
-    width: 100%;
-    height: 100%;
-    position: absolute;
-    overflow: hidden;
-    top: 0;
-    left: 0;
-    background: linear-gradient(40deg, rgb(5, 37, 55), oklch(var(--b3)));
-    z-index: 1;
-    pointer-events: none;
-  }
-
-  .gradient-bg svg {
-    display: none;
-  }
-
-  .gradients-container {
-    filter: url(#goo) blur(10px);
-    width: 100%;
-    height: 100%;
-  }
-
-  .g1 {
-    position: absolute;
-    background: radial-gradient(circle at center, oklch(var(--p) / 0.35) 0, oklch(var(--p) / 0) 50%) no-repeat;
-    width: 80%;
-    height: 80%;
-    top: calc(50% - 80% / 2);
-    left: calc(50% - 80% / 2);
-    opacity: 1;
-
-    transform-origin: center center;
-    animation: moveVertical 30s ease infinite;
-  }
-
-  .g2 {
-    position: absolute;
-    background: radial-gradient(circle at center, oklch(var(--s) / 0.35) 0, oklch(var(--s) / 0) 50%) no-repeat;
-    width: 80%;
-    height: 80%;
-    top: calc(50% - 80% / 2);
-    left: calc(50% - 80% / 2);
-    opacity: 1;
-
-    transform-origin: calc(50% - 400px);
-    animation: moveInCircle 20s reverse infinite;
-  }
-
-  .g3 {
-    position: absolute;
-    background: radial-gradient(circle at center, oklch(var(--a) / 0.35) 0, oklch(var(--a) / 0) 50%) no-repeat;
-    width: 80%;
-    height: 80%;
-    top: calc(50% - 80% / 2 + 200px);
-    left: calc(50% - 80% / 2 - 500px);
-    opacity: 1;
-
-    transform-origin: calc(50% + 400px);
-    animation: moveInCircle 40s linear infinite;
-  }
-
-  .g4 {
-    position: absolute;
-    background: radial-gradient(circle at center, rgba(131, 31, 31, 0.4) 0, rgba(131, 31, 31, 0) 50%) no-repeat;
-    width: 80%;
-    height: 80%;
-    top: calc(50% - 80% / 2);
-    left: calc(50% - 80% / 2);
-    opacity: 0.7;
-
-    transform-origin: calc(50% - 200px);
-    animation: moveHorizontal 40s ease infinite;
-  }
-
-  .g5 {
-    position: absolute;
-    background: radial-gradient(circle at center, rgba(27, 99, 61, 0.4) 0, rgba(27, 99, 61, 0) 50%) no-repeat;
-    width: calc(80% * 2);
-    height: calc(80% * 2);
-    top: calc(50% - 80% / 2);
-    left: calc(50% - 80% / 2);
-    opacity: 1;
-
-    transform-origin: calc(50% - 800px) calc(50% + 200px);
-    animation: moveInCircle 20s ease infinite;
-  }
-
-  .interactive {
-    position: absolute;
-    background: radial-gradient(circle at center, oklch(var(--a) / 0.5) 0, oklch(var(--a) / 0) 50%) no-repeat;
-    mix-blend-mode: var(--blending);
-
-    width: 50vw;
-    height: 50vw;
-    top: -25vw;
-    left: -25vw;
-    opacity: 0.7;
-  }
-</style>

@@ -4,6 +4,7 @@ description: "An information-heavy website built with Astro & Decap for blog pos
 pubDate: "Nov 2021"
 heroImage: "/project_imgs/project1/hero_img.webp"
 category: "dev"
+badge: "Featured"
 tags: ["astro", "decap cms"]
 githubLink: "https://github.com/"
 projectLink: "https://cspcn.co.uk/"

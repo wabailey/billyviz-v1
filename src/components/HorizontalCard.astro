@@ -5,33 +5,40 @@ import dayjs from "dayjs";
 import localizedFormat from "dayjs/plugin/localizedFormat";
 
 dayjs.extend(localizedFormat);
-const displayDate = dayjs(date).format("ll")
+const displayDate = dayjs(date).format("ll");
 ---
 
-<div
-  class="bg-base-300/10 backdrop-blur-2xl hover:shadow-xl transition ease-in-out hover:scale-[102%]"
->
-  <a href={url} target={target}>
-    <div class="flex items-start justify-center max-w-7xl flex-col md:flex-row">
+<a href={url} target={target}>
+  <div
+    class="card sm:max-h-[150px] rounded-none sm:card-side bg-base-300/10 backdrop-blur-2xl hover:shadow-xl transition ease-in-out hover:scale-[102%]"
+  >
+    <figure class="sm:max-w-[250px] md:max-w-[250px]">
       {
-        <Image
-          src={img ? img : '/hero_img.webp'}
-          width={750}
-          height={422}
-          format="webp"
-          alt={title}
-          class="max-w-[220px] aspect-video object-cover"
-        />
+        (
+          <Image
+            src={img ? img : "/hero_img.webp"}
+            width={750}
+            height={422}
+            format="webp"
+            alt={title}
+          />
+        )
       }
-      <div class="grow w-full p-4">
-        <div class="flex items-end justify-between gap-2">
-          <h2 class="card-title">
-            {title}
-          </h2>
-          {date && <time class="text-sm opacity-60 min-w-[80px]">{displayDate}</time>}
-        </div>
-        <p class="my-2 max-w-[620px]">{desc}</p>
-      </div>
+    </figure>
+    <div class="card-body p-4 sm:py-2 gap-0">
+      <h2
+        class="card-title items-start justify-between flex-col sm:flex-row sm:items-baseline sm:text-base md:text-lg xl:text-xl"
+      >
+        {title}
+        {
+          date && (
+            <time class="text-sm font-normal opacity-60 min-w-[100px] sm:text-right">
+              {displayDate}
+            </time>
+          )
+        }
+      </h2>
+      <p class="sm:text-sm md:text-base my-2 max-w-[620px]">{desc}</p>
     </div>
-  </a>
-</div>
+  </div>
+</a>

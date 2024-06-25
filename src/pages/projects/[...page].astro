@@ -1,131 +1,198 @@
 ---
 import BaseLayout from "@layouts/BaseLayout.astro";
 import ProjectCard from "@components/ProjectCard.astro";
-import FilterButton from '@components/FilterButton.astro';
+import FilterButton from "@components/FilterButton.astro";
 import { getCollection } from "astro:content";
 import createSlug from "../../lib/createSlug";
 
 export async function getStaticPaths() {
   const projects = await getCollection("projects");
-  return projects.map(project => ({
+  return projects.map((project) => ({
     params: { slug: project.slug },
   }));
 }
 
-const allProjects = await getCollection('projects');
-const sortedProjects = allProjects.sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
+const allProjects = await getCollection("projects");
+const sortedProjects = allProjects.sort(
+  (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf(),
+);
 
 let cats = sortedProjects.map((c) => c.data.category).flat();
-cats = ['all', ...cats]
-const uniqueCats = [...new Set(cats)]
-
+cats = ["all", ...cats];
+const uniqueCats = [...new Set(cats)];
 ---
 
 <BaseLayout title="Projects" sideBarActiveItemID="projects">
-  <div>
-    <div class="text-3xl w-full font-bold mb-12">Projects</div>
-  </div>
-
-  <div class="flex items-center gap-3 pb-3 mb-6 border-b-[1px] border-white/10" id="category" data-cats={uniqueCats}>
-    <FilterButton classList="underline" category={uniqueCats[0]} name="All"></FilterButton>
-    
-    <FilterButton classList="opacity-60" category={uniqueCats[1]} name="Web"></FilterButton>
-    
-    <FilterButton classList="opacity-60" category={uniqueCats[2]} name="Visualisation"></FilterButton>
-  </div>
-  
-  <div class="grid grid-cols-2 gap-12 transition-all ease-in-out">
-  {
-    sortedProjects.map((projects) => (
-      <div id="projectCard" class={projects.data.category}>
-        <ProjectCard
-          img={projects.data.heroImage}
-          title={projects.data.title}
-          desc={projects.data.description}
-          url={"/projects/" + createSlug(projects.data.title, projects.slug)}
-          target="_self"
-          badge={projects.data.badge}
-          tags={projects.data.tags}
-        />
+  <div class="relative p-6 mx-auto lg:max-w-[1000px] max-w-[100vw]">
+    <div>
+      <div
+        class="text-4xl sm:text-5xl leading-[3rem] sm:leading-[4rem] w-full font-hero text-gradient text-stroke italic"
+      >
+        Projects
       </div>
-    ))
-  }
-  </div>
+      <div class="divider-gradient"></div>
+    </div>
 
+    <div
+      class="flex items-center gap-3 pb-3 mb-6 border-b-[1px] border-white/10"
+      id="category"
+      data-cats={uniqueCats}
+    >
+      <FilterButton classList="underline" category={uniqueCats[0]} name="All" />
+
+      <FilterButton
+        classList="opacity-60"
+        category={uniqueCats[1]}
+        name="Web"
+      />
+
+      <FilterButton
+        classList="opacity-60"
+        category={uniqueCats[2]}
+        name="Visualisation"
+      />
+    </div>
+
+    <div class="grid sm:grid-cols-2 gap-12 transition-all ease-in-out">
+      {
+        sortedProjects.map((projects) => (
+          <div id="projectCard" class={projects.data.category}>
+            <ProjectCard
+              img={projects.data.heroImage}
+              title={projects.data.title}
+              desc={projects.data.description}
+              url={
+                "/projects/" + createSlug(projects.data.title, projects.slug)
+              }
+              target="_self"
+              badge={projects.data.badge}
+              tags={projects.data.tags}
+            />
+          </div>
+        ))
+      }
+    </div>
+  </div>
 </BaseLayout>
 
-<script is:inline>
-  document.addEventListener('astro:page-load', () => { 
-// Your code
-  const allBtn = document.getElementById('AllP')
-  const webBtn = document.getElementById('WebP')
-  const vizBtn = document.getElementById('VisualisationP')
-
-  allBtn.addEventListener('click', (e) => (
-    showAll(e),
-    allBtn.classList.add('underline'),
-    allBtn.classList.remove('opacity-60'),
-    webBtn.classList.remove('underline'),
-    webBtn.classList.add('opacity-60'),
-    vizBtn.classList.remove('underline'),
-    vizBtn.classList.add('opacity-60')
-  ));
-  webBtn.addEventListener('click', (e) => (
-    hideProjects(e),
-    allBtn.classList.remove('underline'),
-    allBtn.classList.add('opacity-60'),
-    webBtn.classList.add('underline'),
-    webBtn.classList.remove('opacity-60'),
-    vizBtn.classList.remove('underline'),
-    vizBtn.classList.add('opacity-60')
-  ));
-  vizBtn.addEventListener('click', (e) => (
-    hideProjects(e),
-    allBtn.classList.remove('underline'),
-    allBtn.classList.add('opacity-60'),
-    webBtn.classList.remove('underline'),
-    webBtn.classList.add('opacity-60'),
-    vizBtn.classList.add('underline'),
-    vizBtn.classList.remove('opacity-60')
-  ));
-
-  function hideProjects(e) {
-    let selectedCat = e.currentTarget.getAttribute('data-type')
-    let catEl = document.getElementById('category')
-    let cats = catEl.dataset.cats
-
-    cats = cats.split(',')
-    cats.splice(cats.indexOf(selectedCat), 1)
-
-    cats.forEach((cat) => {
-      const elementsToHide = document.getElementsByClassName(cat)
-
-      for (let i = 0; i < elementsToHide.length; i++) {
-        elementsToHide[i].style.display = 'none'
-      }
-    })
-
-    let elementsToShow = document.getElementsByClassName(selectedCat)
-    
-    for (let i = 0; i < elementsToShow.length; i++) {
-      elementsToShow[i].style.display = 'block'
+<style>
+  @keyframes textColor {
+    0% {
+      background-position: left;
+    }
+    100% {
+      background-position: right;
     }
   }
 
-  function showAll(e) {
-    let catEl = document.getElementById('category')
-    let cats = catEl.dataset.cats
-    cats = cats.split(',')
-
-    cats.forEach((cat) => {
-      const elementsToShow = document.getElementsByClassName(cat)
-
-      for (let i = 0; i < elementsToShow.length; i++) {
-        elementsToShow[i].style.display = 'block'
-      }
-    })
+  .text-gradient {
+    background-image: linear-gradient(
+      45deg,
+      oklch(var(--p)),
+      oklch(var(--s)),
+      oklch(var(--a))
+    );
+    background-clip: text;
+    color: transparent;
+    background-size: 400%;
+    animation: textColor 20s infinite alternate;
   }
 
-  })
-  
+  .divider-gradient {
+    text-align: center;
+    margin: 1.5rem auto;
+    height: 1px;
+    width: 100%;
+    background-image: linear-gradient(
+      45deg,
+      oklch(var(--p)),
+      oklch(var(--s)),
+      oklch(var(--a))
+    );
+    background-size: 400%;
+    animation: textColor 20s infinite alternate;
+  }
+</style>
+
+<script is:inline>
+  document.addEventListener("astro:page-load", () => {
+    // Your code
+    const allBtn = document.getElementById("AllP");
+    const webBtn = document.getElementById("WebP");
+    const vizBtn = document.getElementById("VisualisationP");
+
+    allBtn.addEventListener(
+      "click",
+      (e) => (
+        showAll(e),
+        allBtn.classList.add("underline"),
+        allBtn.classList.remove("opacity-60"),
+        webBtn.classList.remove("underline"),
+        webBtn.classList.add("opacity-60"),
+        vizBtn.classList.remove("underline"),
+        vizBtn.classList.add("opacity-60")
+      ),
+    );
+    webBtn.addEventListener(
+      "click",
+      (e) => (
+        hideProjects(e),
+        allBtn.classList.remove("underline"),
+        allBtn.classList.add("opacity-60"),
+        webBtn.classList.add("underline"),
+        webBtn.classList.remove("opacity-60"),
+        vizBtn.classList.remove("underline"),
+        vizBtn.classList.add("opacity-60")
+      ),
+    );
+    vizBtn.addEventListener(
+      "click",
+      (e) => (
+        hideProjects(e),
+        allBtn.classList.remove("underline"),
+        allBtn.classList.add("opacity-60"),
+        webBtn.classList.remove("underline"),
+        webBtn.classList.add("opacity-60"),
+        vizBtn.classList.add("underline"),
+        vizBtn.classList.remove("opacity-60")
+      ),
+    );
+
+    function hideProjects(e) {
+      let selectedCat = e.currentTarget.getAttribute("data-type");
+      let catEl = document.getElementById("category");
+      let cats = catEl.dataset.cats;
+
+      cats = cats.split(",");
+      cats.splice(cats.indexOf(selectedCat), 1);
+
+      cats.forEach((cat) => {
+        const elementsToHide = document.getElementsByClassName(cat);
+
+        for (let i = 0; i < elementsToHide.length; i++) {
+          elementsToHide[i].style.display = "none";
+        }
+      });
+
+      let elementsToShow = document.getElementsByClassName(selectedCat);
+
+      for (let i = 0; i < elementsToShow.length; i++) {
+        elementsToShow[i].style.display = "block";
+      }
+    }
+
+    function showAll(e) {
+      let catEl = document.getElementById("category");
+      let cats = catEl.dataset.cats;
+      cats = cats.split(",");
+
+      cats.forEach((cat) => {
+        const elementsToShow = document.getElementsByClassName(cat);
+
+        for (let i = 0; i < elementsToShow.length; i++) {
+          elementsToShow[i].style.display = "block";
+        }
+      });
+    }
+  });
 </script>

@@ -8,20 +8,52 @@ export interface Props extends BlogSchema {}
 
 const { title, description, pubDate, heroImage, blogLink } = Astro.props;
 dayjs.extend(localizedFormat);
-const displayDate = dayjs(pubDate).format("ll")
+const displayDate = dayjs(pubDate).format("ll");
 import { Image } from "astro:assets";
 ---
 
-<BaseLayout title={title} description={description} image={heroImage}, ogType="article">
-  <main class="md:flex md:justify-center">
-    <article class="prose prose-quoteless prose-lg max-w-3xl prose-img:mx-auto">
-      {heroImage && <Image width={750} height={422} format="webp" src={heroImage} alt={title} class="w-full mb-6 aspect-video object-cover" />}
-      <h1 class="title my-2 text-4xl font-bold">{title}</h1>
+<BaseLayout
+  title={title}
+  description={description}
+  image={heroImage}
+  ,
+  ogType="article"
+>
+  <main
+    class="md:flex md:justify-center relative p-6 mx-auto lg:max-w-[1000px] max-w-[100vw]"
+  >
+    <article class="max-w-3xl">
+      {
+        heroImage && (
+          <Image
+            width={750}
+            height={422}
+            format="webp"
+            src={heroImage}
+            alt={title}
+            class="w-full mb-6 aspect-video object-cover"
+          />
+        )
+      }
+      <h1 class="title my-2 text-2xl sm:text-3xl xl:text-4xl font-medium">
+        {title}
+      </h1>
       {pubDate && <time>{displayDate}</time>}
-      <br />
-      {blogLink && <a href={blogLink}>{blogLink}</a>}
+      <div class="mt-1">
+        {
+          blogLink && (
+            <a href={blogLink} class="link link-accent">
+              See the work &rarr;
+            </a>
+          )
+        }
+      </div>
       <div class="divider my-2"></div>
-      <slot/>
+      <div
+        class="prose prose-quoteless sm:prose-lg xl:prose-xl prose-img:mx-auto"
+      >
+        <slot />
+      </div>
     </article>
   </main>
 </BaseLayout>
