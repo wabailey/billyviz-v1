@@ -121,42 +121,50 @@ const uniqueCats = [...new Set(cats)];
     const webBtn = document.getElementById("WebP");
     const vizBtn = document.getElementById("VisualisationP");
 
-    allBtn.addEventListener(
-      "click",
-      (e) => (
-        showAll(e),
-        allBtn.classList.add("underline"),
-        allBtn.classList.remove("opacity-60"),
-        webBtn.classList.remove("underline"),
-        webBtn.classList.add("opacity-60"),
-        vizBtn.classList.remove("underline"),
-        vizBtn.classList.add("opacity-60")
-      ),
-    );
-    webBtn.addEventListener(
-      "click",
-      (e) => (
-        hideProjects(e),
-        allBtn.classList.remove("underline"),
-        allBtn.classList.add("opacity-60"),
-        webBtn.classList.add("underline"),
-        webBtn.classList.remove("opacity-60"),
-        vizBtn.classList.remove("underline"),
-        vizBtn.classList.add("opacity-60")
-      ),
-    );
-    vizBtn.addEventListener(
-      "click",
-      (e) => (
-        hideProjects(e),
-        allBtn.classList.remove("underline"),
-        allBtn.classList.add("opacity-60"),
-        webBtn.classList.remove("underline"),
-        webBtn.classList.add("opacity-60"),
-        vizBtn.classList.add("underline"),
-        vizBtn.classList.remove("opacity-60")
-      ),
-    );
+    if (allBtn) {
+      allBtn.addEventListener(
+        "click",
+        (e) => (
+          showAll(e),
+          allBtn.classList.add("underline"),
+          allBtn.classList.remove("opacity-60"),
+          webBtn.classList.remove("underline"),
+          webBtn.classList.add("opacity-60"),
+          vizBtn.classList.remove("underline"),
+          vizBtn.classList.add("opacity-60")
+        ),
+      );
+    }
+
+    if (webBtn) {
+      webBtn.addEventListener(
+        "click",
+        (e) => (
+          hideProjects(e),
+          allBtn.classList.remove("underline"),
+          allBtn.classList.add("opacity-60"),
+          webBtn.classList.add("underline"),
+          webBtn.classList.remove("opacity-60"),
+          vizBtn.classList.remove("underline"),
+          vizBtn.classList.add("opacity-60")
+        ),
+      );
+    }
+
+    if (vizBtn) {
+      vizBtn.addEventListener(
+        "click",
+        (e) => (
+          hideProjects(e),
+          allBtn.classList.remove("underline"),
+          allBtn.classList.add("opacity-60"),
+          webBtn.classList.remove("underline"),
+          webBtn.classList.add("opacity-60"),
+          vizBtn.classList.add("underline"),
+          vizBtn.classList.remove("opacity-60")
+        ),
+      );
+    }
 
     function hideProjects(e) {
       let selectedCat = e.currentTarget.getAttribute("data-type");
