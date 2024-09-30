@@ -1,57 +1,42 @@
 ---
-title: "Demo Post 3"
-description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor."
-pubDate: "Sep 12 2022"
+title: "Amsterdam Airbnb Data Analysis"
+description: "This project analysed Airbnb listings data in Amsterdam, identifying different trends and insights."
+pubDate: "Sept 2023"
+heroImage: "/project_imgs/project3/hero_img.webp"
 category: "viz"
-badge: "Demo badge"
-tags: ["rust", "tokio"]
+tags: ["tableau"]
+projectLink: "https://public.tableau.com/app/profile/will.bailey1516/viz/AirbnbAmsterdam_16982706812710/Dash-Listings"
 ---
 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
-incididunt ut labore et dolore magna aliqua. Vitae ultricies leo integer
-malesuada nunc vel risus commodo viverra. Adipiscing enim eu turpis egestas
-pretium. Euismod elementum nisi quis eleifend quam adipiscing. In hac habitasse
-platea dictumst vestibulum. Sagittis purus sit amet volutpat. Netus et malesuada
-fames ac turpis egestas. Eget magna fermentum iaculis eu non diam phasellus
-vestibulum lorem. Varius sit amet mattis vulputate enim. Habitasse platea
-dictumst quisque sagittis. Integer quis auctor elit sed vulputate mi. Dictumst
-quisque sagittis purus sit amet.
+**Overview:**  
+This project analysed Airbnb listings data in Amsterdam to identify trends and insights that could be useful for Airbnb hosts, guests, and also potentially policymakers or other areas of local government. The data included information on bookings, location, listing price, listing type, and guest reviews.
 
-Morbi tristique senectus et netus. Id semper risus in hendrerit gravida rutrum
-quisque non tellus. Habitasse platea dictumst quisque sagittis purus sit amet.
-Tellus molestie nunc non blandit massa. Cursus vitae congue mauris rhoncus.
-Accumsan tortor posuere ac ut. Fringilla urna porttitor rhoncus dolor. Elit
-ullamcorper dignissim cras tincidunt lobortis. In cursus turpis massa tincidunt
-dui ut ornare lectus. Integer feugiat scelerisque varius morbi enim nunc.
-Bibendum neque egestas congue quisque egestas diam. Cras ornare arcu dui vivamus
-arcu felis bibendum. Dignissim suspendisse in est ante in nibh mauris. Sed
-tempus urna et pharetra pharetra massa massa ultricies mi.
+**Methods:**  
+The data was downloaded directly from insideairbnb.com, then cleaned and preprocessed in Excel, before being analysed in Tableau. These techniques included descriptive statistics, correlation analysis, and density analysis.
 
-Mollis nunc sed id semper risus in. Convallis a cras semper auctor neque. Diam
-sit amet nisl suscipit. Lacus viverra vitae congue eu consequat ac felis donec.
-Egestas integer eget aliquet nibh praesent tristique magna sit amet. Eget magna
-fermentum iaculis eu non diam. In vitae turpis massa sed elementum. Tristique et
-egestas quis ipsum suspendisse ultrices. Eget lorem dolor sed viverra ipsum. Vel
-turpis nunc eget lorem dolor sed viverra. Posuere ac ut consequat semper viverra
-nam. Laoreet suspendisse interdum consectetur libero id faucibus. Diam phasellus
-vestibulum lorem sed risus ultricies tristique. Rhoncus dolor purus non enim
-praesent elementum facilisis. Ultrices tincidunt arcu non sodales neque. Tempus
-egestas sed sed risus pretium quam vulputate. Viverra suspendisse potenti nullam
-ac tortor vitae purus faucibus ornare. Fringilla urna porttitor rhoncus dolor
-purus non. Amet dictum sit amet justo donec enim.
+**Findings:**  
+The analysis found that Airbnb listings in Amsterdam are typically priced higher than hotel rooms. However, the prices vary significantly depending on the location, room size, time of year, and length of stay. The analysis also found that Airbnb listings are generally well-rated by guests and receive most bookings in the late summer and early autumn months.
 
-Mattis ullamcorper velit sed ullamcorper morbi tincidunt. Tortor posuere ac ut
-consequat semper viverra. Tellus mauris a diam maecenas sed enim ut sem viverra.
-Venenatis urna cursus eget nunc scelerisque viverra mauris in. Arcu ac tortor
-dignissim convallis aenean et tortor at. Curabitur gravida arcu ac tortor
-dignissim convallis aenean et tortor. Egestas tellus rutrum tellus pellentesque
-eu. Fusce ut placerat orci nulla pellentesque dignissim enim sit amet. Ut enim
-blandit volutpat maecenas volutpat blandit aliquam etiam. Id donec ultrices
-tincidunt arcu. Id cursus metus aliquam eleifend mi.
+The analysis identified a number of factors that are associated with higher Airbnb listing prices, including:
 
-Tempus quam pellentesque nec nam aliquam sem. Risus at ultrices mi tempus
-imperdiet. Id porta nibh venenatis cras sed felis eget velit. Ipsum a arcu
-cursus vitae. Facilisis magna etiam tempor orci eu lobortis elementum. Tincidunt
-dui ut ornare lectus sit. Quisque non tellus orci ac. Blandit libero volutpat
-sed cras. Nec tincidunt praesent semper feugiat nibh sed pulvinar proin gravida.
-Egestas integer eget aliquet nibh praesent tristique magna.
+- _Location:_ Listings in neighbourhoods closer to the centre of Amsterdam are typically more expensive than listings in outlying areas.
+- _Type of listing:_ Entire homes or apartments are typically more expensive than shared rooms.
+- _Size of listing:_ Listings capable of accommodating more than 5 people are on average significantly more expensive to book.
+
+The analysis also identified a number of factors that are associated with higher Airbnb guest ratings, including:
+
+- _Location:_ Listings on the east-side of Amsterdam in the Ijburg, Zeeburgereiland, and Bijlmer-Oost neighbourhoods are typically more highly rated than listings in other areas.
+- _Type of listing:_ Entire homes or apartments are typically more highly rated than shared rooms.
+- _Popularity of listing:_ Only 5 of the top 10 most popular hosts have a review rating above the average review rating of all Amsterdam listings, there could be many reasons for this worth investigating further, one possibility could be that guests are giving the listing price significantly more consideration than the listing review rating.
+
+**Recommendations:**
+
+- The Westerpark neighbourhood, located near the centre of the city, sees a significant amount of fewer bookings than the other central neighbourhoods, there may be untapped potential and opportunity in this neighbourhood.
+- Money conscious Airbnb guests who do not want to compromise on a central location may want to consider listings in the Oostelijk Havengebied neighbourhood, with an average listing price a whole 100 euro cheaper than the bordering Centrum-Oost neighbourhood.
+- Airbnb guests looking for the cheapest stays should consider shared room listings.
+- Airbnb hosts looking to maximise earnings, should consider listing their property if it is in a central location, offering an entire home or apartment, and accommodating more than 5 people.
+
+**Conclusion:**  
+This data analysis has shown that Airbnb listings in Amsterdam are typically priced higher than hotel rooms, with prices varying depending on the location, size, and type of listing as well as the time of year and length of stay. The analysis also found that Airbnb listings are generally well-rated by guests and receive most bookings in the late summer and early autumn months.
+
+Overall, this analysis suggests that Airbnb is a viable option for both hosts and guests in Amsterdam. Hosts can potentially earn a good income by listing their properties on Airbnb, and guests can find a variety of accommodation options at different price points. However, it is important to note that prices can vary significantly, so it is important to do your research before booking.
