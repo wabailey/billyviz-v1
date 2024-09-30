@@ -5,10 +5,10 @@ const tag_url = url.split("/").slice(0, -1).join("/") + "/tag";
 ---
 
 <div
-  class="bg-base-300/10 backdrop-blur-2xl hover:shadow-xl transition ease-in-out hover:scale-[102%]"
+  class="h-full bg-base-300/10 backdrop-blur-2xl hover:shadow-xl transition ease-in-out hover:scale-[102%]"
 >
   <a href={url} target={target}>
-    <div class="w-full card rounded-none">
+    <div class="w-full h-full card rounded-none">
       {
         (
           <Image
@@ -21,7 +21,7 @@ const tag_url = url.split("/").slice(0, -1).join("/") + "/tag";
           />
         )
       }
-      <div class="card-body pt-4 px-4 gap-0">
+      <div class="card-body p-4 justify-between">
         <h2
           class="card-title items-start justify-between flex-col md:flex-row md:items-baseline"
         >

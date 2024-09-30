@@ -12,14 +12,17 @@ export async function getStaticPaths() {
   }));
 }
 
-const allProjects = await getCollection("projects");
-const sortedProjects = allProjects.sort(
+const publishedProjects = await getCollection("projects", ({ data }) => {
+  return data.published == true;
+});
+
+const sortedProjects = publishedProjects.sort(
   (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf(),
 );
 
 let cats = sortedProjects.map((c) => c.data.category).flat();
 cats = ["all", ...cats];
-const uniqueCats = [...new Set(cats)];
+const uniqueCats = [...new Set(cats)].sort();
 ---
 
 <BaseLayout title="Projects" sideBarActiveItemID="projects">

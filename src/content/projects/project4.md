@@ -7,6 +7,7 @@ category: "dev"
 tags: ["react", "nextjs"]
 githubLink: "https://github.com/wabailey/next-gallery"
 projectLink: "https://next-gallery-vert.vercel.app/"
+published: true
 ---
 
 A full stack NextJS gallery app with authentication that allows users to upload image files. The image files are hosted on uploadthing and the information is stored in a postgres database with Next.

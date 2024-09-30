@@ -15,6 +15,7 @@ const projectSchema = z.object({
     .optional(),
   githubLink: z.string().optional(),
   projectLink: z.string().optional(),
+  published: z.boolean(),
 });
 
 const blogSchema = z.object({

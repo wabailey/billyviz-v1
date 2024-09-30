@@ -7,6 +7,7 @@ category: "viz"
 tags: ["d3", "svelte"]
 githubLink: "https://github.com/wabailey/astro-tw-cottage"
 projectLink: "https://www.llanbedrogholidays.co.uk/"
+published: false
 ---
 
 A Svelte app showcasing the capabilities of svelte and d3.

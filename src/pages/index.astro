@@ -5,10 +5,13 @@ import ProjectCard from "@components/ProjectCard.astro";
 import { getCollection } from "astro:content";
 import createSlug from "../lib/createSlug";
 
-const projects = await getCollection("projects");
+const publishedProjects = await getCollection("projects", ({ data }) => {
+  return data.published == true;
+});
+
 const posts = await getCollection("blog");
 
-const sortedProjects = projects.sort(
+const sortedProjects = publishedProjects.sort(
   (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf(),
 );
 const sortedPosts = posts.sort(

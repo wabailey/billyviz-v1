@@ -6,6 +6,7 @@ heroImage: "/project_imgs/project3/hero_img.webp"
 category: "viz"
 tags: ["tableau"]
 projectLink: "https://public.tableau.com/app/profile/will.bailey1516/viz/AirbnbAmsterdam_16982706812710/Dash-Listings"
+published: true
 ---
 
 **Overview:**  
